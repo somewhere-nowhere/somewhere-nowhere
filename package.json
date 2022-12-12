@@ -1,0 +1,25 @@
+{
+  "name": "somewhere-nowhere",
+  "description": "Somewhere Nowhere",
+  "version": "1.0.0",
+  "author": {
+    "name": "Nathaniel Potrepka",
+    "url": "https://github.com/potrepka"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@chainlink/contracts": "^0.5.1",
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.6.0",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.8",
+    "hardhat": "^2.9.7",
+    "hardhat-gas-reporter": "^1.0.8"
+  }
+}
