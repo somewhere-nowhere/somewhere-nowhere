@@ -3,9 +3,9 @@
 pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
+import './interfaces/ISomewhereNowhere.sol';
 import './interfaces/ISomewhereNowhereMetadata.sol';
 import './lib/Revealable.sol';
-import './SomewhereNowhere.sol';
 
 contract SomewhereNowhereMetadata is ISomewhereNowhereMetadata, Revealable {
     using Strings for uint256;
@@ -54,7 +54,7 @@ contract SomewhereNowhereMetadata is ISomewhereNowhereMetadata, Revealable {
                     abi.encodePacked(
                         _getRevealedBaseURI(),
                         _getShuffledId(
-                            SomewhereNowhere(_tokenContractAddress)
+                            ISomewhereNowhere(_tokenContractAddress)
                                 .getGlobalSupply(),
                             tokenId
                         ).toString(),
