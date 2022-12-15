@@ -8,8 +8,8 @@ import './interfaces/IOwnable.sol';
 abstract contract Ownable is Context, IOwnable {
     address private _ownerAddress;
 
-    constructor() {
-        _transferOwnership(_msgSender());
+    constructor(address ownerAddress) {
+        _transferOwnership(ownerAddress);
     }
 
     modifier onlyOwner() virtual {

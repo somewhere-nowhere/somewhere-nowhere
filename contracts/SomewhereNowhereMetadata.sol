@@ -13,14 +13,17 @@ contract SomewhereNowhereMetadata is ISomewhereNowhereMetadata, Revealable {
     address private _tokenContractAddress;
 
     constructor(
+        address ownerAddress,
         address tokenContractAddress,
         address coordinatorAddress,
         address linkTokenAddress,
         bytes32 keyHash,
         string memory defaultURI
-    ) Revealable(coordinatorAddress, linkTokenAddress, keyHash) {
-        setControllerAddress(getOwnerAddress());
-
+    )
+        Ownable(ownerAddress)
+        Revealable(coordinatorAddress, linkTokenAddress, keyHash)
+    {
+        setControllerAddress(ownerAddress);
         setTokenContractAddress(tokenContractAddress);
         setDefaultURI(defaultURI);
     }
