@@ -17,10 +17,10 @@ describe('SomewhereNowhere', function () {
   const REVEALED_BASE_URI = 'REVEALED_BASE_URI'
 
   let owner
-  let customer
   let creator
   let registry
   let signer
+  let customer
 
   let contract
   let metadataContract
@@ -31,7 +31,7 @@ describe('SomewhereNowhere', function () {
   let signature
 
   beforeEach(async () => {
-    ;[owner, customer, creator, registry, signer] = await ethers.getSigners()
+    ;[owner, creator, registry, signer, customer] = await ethers.getSigners()
 
     const factory = await ethers.getContractFactory('SomewhereNowhere')
     const metadataFactory = await ethers.getContractFactory(
@@ -44,6 +44,7 @@ describe('SomewhereNowhere', function () {
       ZERO_ADDRESS,
       signer.address
     )
+    await contract.deployed()
     metadataContract = await metadataFactory.deploy(
       owner.address,
       contract.address,
@@ -52,6 +53,7 @@ describe('SomewhereNowhere', function () {
       ZERO_UINT256,
       DEFAULT_URI
     )
+    await metadataContract.deployed()
     await contract.setMetadataContractAddress(metadataContract.address)
     await metadataContract.setRevealedBaseURI(REVEALED_BASE_URI)
 
@@ -73,7 +75,6 @@ describe('SomewhereNowhere', function () {
       wallet: owner.address,
     }
     signature = await signer._signTypedData(domain, types, values)
-    await contract.setSigningAddress(signer.address)
   })
 
   describe('getControllerAddress', () => {
