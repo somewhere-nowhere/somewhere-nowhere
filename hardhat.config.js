@@ -12,7 +12,7 @@ const {
  */
 module.exports = {
   etherscan: {
-    apiKey: 'ISHX7J4EFPR56KRY34YEQ752GDGZF264N6',
+    apiKey: ETHERSCAN_API_KEY,
   },
   networks: {
     mainnet: {
