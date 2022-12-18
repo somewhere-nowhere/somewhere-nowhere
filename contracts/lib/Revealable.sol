@@ -106,7 +106,7 @@ abstract contract Revealable is IRevealable, Roles, VRFConsumerBase {
         for (uint256 i = 1; i <= supply; ++i) {
             data[i] = i;
         }
-        for (uint256 i = 1; i <= supply; ++i) {
+        for (uint256 i = 1; i <= tokenId; ++i) {
             uint256 j = i +
                 (uint256(keccak256(abi.encode(_seed, i))) % data[0]);
             (data[i], data[j]) = (data[j], data[i]);
