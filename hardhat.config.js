@@ -2,9 +2,11 @@ require('@nomiclabs/hardhat-waffle')
 require('hardhat-gas-reporter')
 
 const {
+  ETHERSCAN_API_KEY,
   INFURA_API_KEY,
   DEPLOYER_PRIVATE_KEY,
   SIGNER_PRIVATE_KEY,
+  DEPLOYER_PRIVATE_KEY_LOCALHOST,
 } = require('./secret.json')
 
 /**
