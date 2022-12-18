@@ -44,7 +44,6 @@ describe('SomewhereNowhere', function () {
       ZERO_ADDRESS,
       signer.address
     )
-    await contract.deployed()
     metadataContract = await metadataFactory.deploy(
       owner.address,
       contract.address,
@@ -53,6 +52,7 @@ describe('SomewhereNowhere', function () {
       ZERO_UINT256,
       DEFAULT_URI
     )
+    await contract.deployed()
     await metadataContract.deployed()
     await contract.setMetadataContractAddress(metadataContract.address)
     await metadataContract.setRevealedBaseURI(REVEALED_BASE_URI)
