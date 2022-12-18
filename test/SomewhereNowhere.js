@@ -37,6 +37,7 @@ describe('SomewhereNowhere', function () {
     const metadataFactory = await ethers.getContractFactory(
       'SomewhereNowhereMetadataV1'
     )
+
     contract = await factory.deploy(
       owner.address,
       creator.address,
@@ -52,8 +53,10 @@ describe('SomewhereNowhere', function () {
       ZERO_UINT256,
       DEFAULT_URI
     )
+
     await contract.deployed()
     await metadataContract.deployed()
+
     await contract.setMetadataContractAddress(metadataContract.address)
     await metadataContract.setRevealedBaseURI(REVEALED_BASE_URI)
 
