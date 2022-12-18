@@ -4,10 +4,10 @@ pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
 import './interfaces/ISomewhereNowhere.sol';
-import './interfaces/ISomewhereNowhereMetadata.sol';
+import './interfaces/ISomewhereNowhereMetadataV1.sol';
 import './lib/Revealable.sol';
 
-contract SomewhereNowhereMetadata is ISomewhereNowhereMetadata, Revealable {
+contract SomewhereNowhereMetadataV1 is ISomewhereNowhereMetadataV1, Revealable {
     using Strings for uint256;
 
     address private _tokenContractAddress;

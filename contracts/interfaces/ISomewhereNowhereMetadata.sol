@@ -2,9 +2,7 @@
 
 pragma solidity ^0.8.4;
 
-import '../lib/interfaces/IRevealable.sol';
-
-interface ISomewhereNowhereMetadata is IRevealable {
+interface ISomewhereNowhereMetadata {
     error TokenContractAddressIsZeroAddress();
 
     event TokenContractAddressUpdated(address indexed tokenContractAddress);

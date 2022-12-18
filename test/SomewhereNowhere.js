@@ -35,7 +35,7 @@ describe('SomewhereNowhere', function () {
 
     const factory = await ethers.getContractFactory('SomewhereNowhere')
     const metadataFactory = await ethers.getContractFactory(
-      'SomewhereNowhereMetadata'
+      'SomewhereNowhereMetadataV1'
     )
     contract = await factory.deploy(
       owner.address,
