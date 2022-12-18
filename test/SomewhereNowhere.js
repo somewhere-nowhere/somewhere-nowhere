@@ -4,8 +4,6 @@ describe('SomewhereNowhere', function () {
   const MAX_UINT32 = '4294967295'
   const MAX_UINT64 = '184467440737095551615'
   const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
-  const ZERO_UINT256 =
-    '0x0000000000000000000000000000000000000000000000000000000000000000'
   const GLOBAL_SUPPLY = 3333
   const RESERVE_SUPPLY = 133
   const SALE_ID = 1000
@@ -22,6 +20,7 @@ describe('SomewhereNowhere', function () {
   let signer
   let customer
 
+  let paymentSplitterContract
   let tokenContract
   let metadataContract
 
