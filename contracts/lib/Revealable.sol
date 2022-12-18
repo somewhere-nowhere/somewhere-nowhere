@@ -2,32 +2,40 @@
 
 pragma solidity ^0.8.4;
 
-import '@chainlink/contracts/src/v0.8/VRFConsumerBase.sol';
+import '@chainlink/contracts/src/v0.8/VRFV2WrapperConsumerBase.sol';
+import '@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol';
 import './interfaces/IRevealable.sol';
 import './Roles.sol';
 
-abstract contract Revealable is IRevealable, Roles, VRFConsumerBase {
-    bytes32 private _keyHash;
-    uint256 private _seed;
+abstract contract Revealable is IRevealable, Roles, VRFV2WrapperConsumerBase {
+    address private immutable _linkAddress;
 
+    uint32 private _callbackGasLimit = 50000;
     string private _defaultURI;
     string private _revealedBaseURI;
+    uint256 private _seed;
 
-    constructor(
-        address coordinatorAddress,
-        address linkTokenAddress,
-        bytes32 keyHash
-    ) VRFConsumerBase(coordinatorAddress, linkTokenAddress) {
-        _keyHash = keyHash;
+    constructor(address linkAddress, address wrapperAddress)
+        VRFV2WrapperConsumerBase(linkAddress, wrapperAddress)
+    {
+        _linkAddress = linkAddress;
     }
 
-    function requestChainlinkVRF() external virtual override onlyController {
-        if (LINK.balanceOf(address(this)) < 2000000000000000000)
-            revert LinkBalanceIsInsufficient();
-
-        bytes32 requestId = requestRandomness(_keyHash, 2000000000000000000);
+    function requestRandomSeed() external virtual override onlyController {
+        uint256 requestId = requestRandomness(_callbackGasLimit, 3, 1);
 
         emit RandomnessRequested(block.timestamp, requestId);
+    }
+
+    function setCallbackGasLimit(uint32 callbackGasLimit)
+        public
+        virtual
+        override
+        onlyController
+    {
+        _callbackGasLimit = callbackGasLimit;
+
+        emit CallbackGasLimitUpdated(callbackGasLimit);
     }
 
     function setDefaultURI(string memory defaultURI)
@@ -58,21 +66,29 @@ abstract contract Revealable is IRevealable, Roles, VRFConsumerBase {
         _setSeed(seed);
     }
 
+    function withdrawLink() public virtual override onlyController {
+        LinkTokenInterface link = LinkTokenInterface(_linkAddress);
+
+        if (!link.transfer(_msgSender(), link.balanceOf(address(this))))
+            revert CannotTransferLink();
+    }
+
     function isRevealed() public view virtual override returns (bool) {
         return _seed > 0;
     }
 
-    function fulfillRandomness(bytes32 requestId, uint256 randomNumber)
+    function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords)
         internal
         virtual
         override
     {
-        if (randomNumber > 0) {
-            emit RandomnessSucceeded(block.timestamp, requestId, randomNumber);
+        uint256 randomWord = randomWords[0];
+        if (randomWord > 0) {
+            emit RandomnessSucceeded(block.timestamp, requestId, randomWord);
 
-            _setSeed(randomNumber);
+            _setSeed(randomWord);
         } else {
-            emit RandomnessFailed(block.timestamp, requestId, randomNumber);
+            emit RandomnessFailed(block.timestamp, requestId, randomWord);
         }
     }
 

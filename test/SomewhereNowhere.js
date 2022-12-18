@@ -60,7 +60,6 @@ describe('SomewhereNowhere', function () {
       tokenContract.address,
       ZERO_ADDRESS,
       ZERO_ADDRESS,
-      ZERO_UINT256,
       DEFAULT_URI
     )
     await metadataContract.deployed()
@@ -533,7 +532,7 @@ describe('SomewhereNowhere', function () {
       ).to.be.revertedWith('SenderIsNotController()')
     })
 
-    it('should be reverted because sender is not controller', async () => {
+    it('should be reverted because operator filter registry address is zero address', async () => {
       await tokenContract.setOperatorFilterRegistryAddress(ZERO_ADDRESS)
       await expect(tokenContract.register()).to.be.revertedWith(
         'OperatorFilterRegistryAddressIsZeroAddress()'
@@ -548,7 +547,7 @@ describe('SomewhereNowhere', function () {
       ).to.be.revertedWith('SenderIsNotController()')
     })
 
-    it('should be reverted because sender is not controller', async () => {
+    it('should be reverted because operator filter registry address is zero address', async () => {
       await tokenContract.setOperatorFilterRegistryAddress(ZERO_ADDRESS)
       await expect(
         tokenContract.registerAndSubscribe(ZERO_ADDRESS)
@@ -616,10 +615,18 @@ describe('SomewhereNowhere', function () {
     })
   })
 
-  describe('requestChainlinkVRF', () => {
+  describe('requestRandomSeed', () => {
     it('should be reverted because sender is not controller', async () => {
       await expect(
-        metadataContract.connect(customer).requestChainlinkVRF()
+        metadataContract.connect(customer).requestRandomSeed()
+      ).to.be.revertedWith('SenderIsNotController()')
+    })
+  })
+
+  describe('setCallbackGasLimit', () => {
+    it('should be reverted because sender is not controller', async () => {
+      await expect(
+        metadataContract.connect(customer).setCallbackGasLimit(0)
       ).to.be.revertedWith('SenderIsNotController()')
     })
   })
@@ -761,7 +768,7 @@ describe('SomewhereNowhere', function () {
       ).to.be.revertedWith('SenderIsNotController()')
     })
 
-    it('should be reverted because sender is not controller', async () => {
+    it('should be reverted because operator filter registry address is zero address', async () => {
       await tokenContract.setOperatorFilterRegistryAddress(ZERO_ADDRESS)
       await expect(tokenContract.subscribe(ZERO_ADDRESS)).to.be.revertedWith(
         'OperatorFilterRegistryAddressIsZeroAddress()'
@@ -836,7 +843,7 @@ describe('SomewhereNowhere', function () {
       ).to.be.revertedWith('SenderIsNotController()')
     })
 
-    it('should be reverted because sender is not controller', async () => {
+    it('should be reverted because operator filter registry address is zero address', async () => {
       await tokenContract.setOperatorFilterRegistryAddress(ZERO_ADDRESS)
       await expect(tokenContract.unregister()).to.be.revertedWith(
         'OperatorFilterRegistryAddressIsZeroAddress()'
@@ -851,11 +858,19 @@ describe('SomewhereNowhere', function () {
       ).to.be.revertedWith('SenderIsNotController()')
     })
 
-    it('should be reverted because sender is not controller', async () => {
+    it('should be reverted because operator filter registry address is zero address', async () => {
       await tokenContract.setOperatorFilterRegistryAddress(ZERO_ADDRESS)
       await expect(tokenContract.unsubscribe()).to.be.revertedWith(
         'OperatorFilterRegistryAddressIsZeroAddress()'
       )
+    })
+  })
+
+  describe('withdrawLink', () => {
+    it('should be reverted because sender is not controller', async () => {
+      await expect(
+        metadataContract.connect(customer).withdrawLink()
+      ).to.be.revertedWith('SenderIsNotController()')
     })
   })
 
@@ -906,6 +921,12 @@ describe('SomewhereNowhere', function () {
       )
         .to.emit(tokenContract, 'CreatorFeeInfoUpdated')
         .withArgs(paymentSplitterContract.address, 500)
+    })
+
+    it('should emit CallbackGasLimitUpdated', async () => {
+      await expect(metadataContract.setCallbackGasLimit(0))
+        .to.emit(metadataContract, 'CallbackGasLimitUpdated')
+        .withArgs(0)
     })
 
     it('should emit DefaultURIUpdated', async () => {
