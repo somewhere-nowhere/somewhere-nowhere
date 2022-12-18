@@ -21,18 +21,17 @@ contract SomewhereNowhere is
     address private _metadataContractAddress;
 
     constructor(
-        address ownerAddress,
         address creatorAddress,
         address registryAddress,
         address registrySubscriptionAddress,
         address signingAddress
     )
         ERC721A('Somewhere Nowhere', 'HOOMAN')
-        Ownable(ownerAddress)
+        Ownable(_msgSender())
         SignatureVerifier(_getDomainSeparator())
         TokenSale(3333, 133)
     {
-        setControllerAddress(ownerAddress);
+        setControllerAddress(getOwnerAddress());
         setCreatorFeeInfo(creatorAddress, 500);
         setOperatorFilterRegistryAddress(registryAddress);
         if (registrySubscriptionAddress != address(0)) {

@@ -39,14 +39,12 @@ describe('SomewhereNowhere', function () {
     )
 
     contract = await factory.deploy(
-      owner.address,
       creator.address,
       registry.address,
       ZERO_ADDRESS,
       signer.address
     )
     metadataContract = await metadataFactory.deploy(
-      owner.address,
       contract.address,
       ZERO_ADDRESS,
       ZERO_ADDRESS,
