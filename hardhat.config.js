@@ -6,6 +6,8 @@ const {
   INFURA_API_KEY,
   DEPLOYER_PRIVATE_KEY,
   SIGNER_PRIVATE_KEY,
+  SAFE_ADDRESS_MAINNET,
+  SAFE_ADDRESS_GOERLI,
   DEPLOYER_PRIVATE_KEY_LOCALHOST,
 } = require('./secret.json')
 
@@ -24,7 +26,7 @@ module.exports = {
       registrySubscriptionAddress: '0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6',
       linkAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
       wrapperAddress: '0x5A861794B927983406fCE1D062e00b9368d97Df6',
-      safeAddress: '',
+      safeAddress: SAFE_ADDRESS_MAINNET,
     },
     goerli: {
       url: `https://goerli.infura.io/v3/${INFURA_API_KEY}`,
@@ -33,7 +35,7 @@ module.exports = {
       registrySubscriptionAddress: '0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6',
       linkAddress: '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
       wrapperAddress: '0x708701a1DfF4f478de54383E49a627eD4852C816',
-      safeAddress: '',
+      safeAddress: SAFE_ADDRESS_GOERLI,
     },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
