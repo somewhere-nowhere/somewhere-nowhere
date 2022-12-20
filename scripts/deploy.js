@@ -5,7 +5,7 @@ const {
   SHARES,
   DEFAULT_URI,
   PRIVATE_SALE_ID,
-  PUBLIC_SALE_ID,
+  // PUBLIC_SALE_ID,
   TEST_ADDRESS,
 } = require('../secret.json')
 
