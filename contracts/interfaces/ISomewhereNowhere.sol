@@ -43,6 +43,11 @@ interface ISomewhereNowhere is
 
     function getMetadataContractAddress() external view returns (address);
 
+    function hasValidSignature(uint256 saleId, bytes calldata signature)
+        external
+        view
+        returns (bool);
+
     function supportsInterface(bytes4 interfaceId)
         external
         view

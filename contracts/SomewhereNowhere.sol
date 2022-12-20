@@ -141,6 +141,15 @@ contract SomewhereNowhere is
         return _metadataContractAddress;
     }
 
+    function hasValidSignature(uint256 saleId, bytes calldata signature)
+        public
+        view
+        override
+        returns (bool)
+    {
+        return _verify(signature, _getMessage(saleId));
+    }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view

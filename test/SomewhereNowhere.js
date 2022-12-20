@@ -28,6 +28,7 @@ describe('SomewhereNowhere', function () {
   let types
   let values
   let signature
+  let badSignature
 
   beforeEach(async () => {
     ;[owner, creator, registry, signer, customer] = await ethers.getSigners()
@@ -83,6 +84,7 @@ describe('SomewhereNowhere', function () {
       wallet: owner.address,
     }
     signature = await signer._signTypedData(domain, types, values)
+    badSignature = owner._signTypedData(domain, types, values)
   })
 
   describe('getControllerAddress', () => {
@@ -164,6 +166,34 @@ describe('SomewhereNowhere', function () {
       expect(await metadataContract.getTokenContractAddress()).to.equal(
         tokenContract.address
       )
+    })
+  })
+
+  describe('hasValidSignature', () => {
+    it('should be valid signature', async () => {
+      expect(
+        await tokenContract.hasValidSignature(SALE_ID, signature)
+      ).to.equal(true)
+    })
+
+    it('should not be valid signature', async () => {
+      expect(
+        await tokenContract
+          .connect(customer)
+          .hasValidSignature(SALE_ID, signature)
+      ).to.equal(false)
+    })
+
+    it('should not be valid signature', async () => {
+      expect(
+        await tokenContract.hasValidSignature(SALE_ID + 1, signature)
+      ).to.equal(false)
+    })
+
+    it('should not be valid signature', async () => {
+      expect(
+        await tokenContract.hasValidSignature(SALE_ID, badSignature)
+      ).to.equal(false)
     })
   })
 
@@ -360,7 +390,6 @@ describe('SomewhereNowhere', function () {
     })
 
     it('should be reverted because signature is not valid', async () => {
-      const badSignature = owner._signTypedData(domain, types, values)
       await expect(
         tokenContract.mintHooman(1, SALE_ID, badSignature)
       ).to.be.revertedWith('SignatureIsNotValid()')
