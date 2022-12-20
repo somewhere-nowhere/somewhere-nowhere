@@ -1,13 +1,12 @@
 const { ethers, network } = require('hardhat')
 
-const inputReader = require('wait-console-input')
-
 const {
   PAYEES,
   SHARES,
   DEFAULT_URI,
   PRIVATE_SALE_ID,
   PUBLIC_SALE_ID,
+  TEST_ADDRESS,
 } = require('../secret.json')
 
 const REGISTRY_ADDRESS = network.config.registryAddress
@@ -28,6 +27,9 @@ async function main() {
   console.log('Deployer:', deployer.address)
 
   console.log('Deployer balance:', (await deployer.getBalance()).toString())
+
+  const network = await ethers.provider.getNetwork()
+  console.log('Chain ID:', network.chainId)
 
   const paymentSplitterContractFactory = await ethers.getContractFactory(
     'SomewhereNowherePaymentSplitter'
@@ -77,26 +79,21 @@ async function main() {
     await metadataContract.transferOwnership(SAFE_ADDRESS)
     console.log('Metadata contract: owner updated')
   } else {
+    if (network.chainId === 31337) {
+      await deployer.sendTransaction({
+        to: TEST_ADDRESS,
+        value: ethers.utils.parseEther('1'),
+      })
+    }
+
     await tokenContract.addSale(PRIVATE_SALE_ID, 3200, 2, 2, 0, MAX_UINT32)
     console.log('Token contract: private sale added')
 
-    console.log('Press SPACE to continue')
-    inputReader.wait()
+    // await tokenContract.addSale(PUBLIC_SALE_ID, 3200, 2, 2, 0, MAX_UINT32)
+    // console.log('Token contract: public sale added', PUBLIC_SALE_ID)
 
-    await tokenContract.removeSale(PRIVATE_SALE_ID)
-    console.log('Token contract: private sale removed')
-
-    await tokenContract.addSale(PUBLIC_SALE_ID, 3200, 2, 2, 0, MAX_UINT32)
-    console.log('Token contract: public sale added')
-
-    console.log('Press SPACE to continue')
-    inputReader.wait()
-
-    await tokenContract.removeSale(PUBLIC_SALE_ID)
-    console.log('Token contract: public sale removed')
-
-    await metadataContract.setSeed(1)
-    console.log('Metadata contract: seed updated')
+    // await metadataContract.setSeed(1)
+    // console.log('Metadata contract: seed updated')
   }
 }
 
