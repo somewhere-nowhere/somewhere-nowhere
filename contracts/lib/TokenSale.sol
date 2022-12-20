@@ -97,6 +97,7 @@ abstract contract TokenSale is ITokenSale, Pausable, Roles {
         status.transactionSupply = saleConfig.transactionSupply;
         status.beginBlock = saleConfig.beginBlock;
         status.endBlock = saleConfig.endBlock;
+        status.currentBlock = block.number;
         status.isActive = _saleIsActive(saleId);
         return status;
     }

@@ -52,6 +52,7 @@ interface ITokenSale is IRoles {
         uint256 transactionSupply;
         uint256 beginBlock;
         uint256 endBlock;
+        uint256 currentBlock;
         bool isActive;
     }
 
