@@ -6671,6 +6671,11 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
+readline-sync@^1.4.9:
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/readline-sync/-/readline-sync-1.4.10.tgz#41df7fbb4b6312d673011594145705bf56d8873b"
+  integrity sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==
+
 regenerate@^1.2.1:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
@@ -8042,6 +8047,13 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+wait-console-input@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/wait-console-input/-/wait-console-input-0.1.7.tgz#56152507bec9075b675c9aa127dacda8da20800a"
+  integrity sha512-gDxDpK1hbpsCk9nryIDUhrtK6wS9ei/o//BTFSYdMChlKMpHVUdw0LSnPR9lVSMgBAKybbezUYA8XRjTqu11hQ==
+  dependencies:
+    readline-sync "^1.4.9"
 
 web3-bzz@1.2.11:
   version "1.2.11"
