@@ -169,34 +169,6 @@ describe('SomewhereNowhere', function () {
     })
   })
 
-  describe('hasValidSignature', () => {
-    it('should be valid signature', async () => {
-      expect(
-        await tokenContract.hasValidSignature(SALE_ID, signature)
-      ).to.equal(true)
-    })
-
-    it('should not be valid signature', async () => {
-      expect(
-        await tokenContract
-          .connect(customer)
-          .hasValidSignature(SALE_ID, signature)
-      ).to.equal(false)
-    })
-
-    it('should not be valid signature', async () => {
-      expect(
-        await tokenContract.hasValidSignature(SALE_ID + 1, signature)
-      ).to.equal(false)
-    })
-
-    it('should not be valid signature', async () => {
-      expect(
-        await tokenContract.hasValidSignature(SALE_ID, badSignature)
-      ).to.equal(false)
-    })
-  })
-
   describe('isPaused', () => {
     it('should not be paused', async () => {
       expect(await tokenContract.isPaused()).to.equal(false)
