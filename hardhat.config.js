@@ -2,6 +2,8 @@ require('@nomiclabs/hardhat-waffle')
 require('hardhat-gas-reporter')
 
 const {
+  ALCHEMY_API_KEY,
+  ALCHEMY_API_KEY_GOERLI,
   ETHERSCAN_API_KEY,
   INFURA_API_KEY,
   DEPLOYER_PRIVATE_KEY,
@@ -20,7 +22,7 @@ module.exports = {
   },
   networks: {
     mainnet: {
-      url: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
+      url: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
       accounts: [DEPLOYER_PRIVATE_KEY, SIGNER_PRIVATE_KEY],
       registryAddress: '0x000000000000AAeB6D7670E522A718067333cd4E',
       registrySubscriptionAddress: '0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6',
@@ -29,7 +31,7 @@ module.exports = {
       safeAddress: SAFE_ADDRESS_MAINNET,
     },
     goerli: {
-      url: `https://goerli.infura.io/v3/${INFURA_API_KEY}`,
+      url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_API_KEY_GOERLI}`,
       accounts: [DEPLOYER_PRIVATE_KEY, SIGNER_PRIVATE_KEY],
       registryAddress: '0x000000000000AAeB6D7670E522A718067333cd4E',
       registrySubscriptionAddress: '0x3cc6CddA760b79bAfa08dF41ECFA224f810dCeB6',
