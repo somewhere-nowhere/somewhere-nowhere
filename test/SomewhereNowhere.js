@@ -945,28 +945,28 @@ describe('SomewhereNowhere', function () {
         .withArgs(ZERO_ADDRESS)
     })
 
-    it('should emit OwnerAddressUpdated', async () => {
+    it('should emit OwnershipTransferred', async () => {
       await expect(tokenContract.renounceOwnership())
-        .to.emit(tokenContract, 'OwnerAddressUpdated')
-        .withArgs(ZERO_ADDRESS)
+        .to.emit(tokenContract, 'OwnershipTransferred')
+        .withArgs(owner.address, ZERO_ADDRESS)
     })
 
-    it('should emit OwnerAddressUpdated', async () => {
+    it('should emit OwnershipTransferred', async () => {
       await expect(metadataContract.renounceOwnership())
-        .to.emit(metadataContract, 'OwnerAddressUpdated')
-        .withArgs(ZERO_ADDRESS)
+        .to.emit(metadataContract, 'OwnershipTransferred')
+        .withArgs(owner.address, ZERO_ADDRESS)
     })
 
-    it('should emit OwnerAddressUpdated', async () => {
+    it('should emit OwnershipTransferred', async () => {
       await expect(tokenContract.transferOwnership(customer.address))
-        .to.emit(tokenContract, 'OwnerAddressUpdated')
-        .withArgs(customer.address)
+        .to.emit(tokenContract, 'OwnershipTransferred')
+        .withArgs(owner.address, customer.address)
     })
 
-    it('should emit OwnerAddressUpdated', async () => {
+    it('should emit OwnershipTransferred', async () => {
       await expect(metadataContract.transferOwnership(customer.address))
-        .to.emit(metadataContract, 'OwnerAddressUpdated')
-        .withArgs(customer.address)
+        .to.emit(metadataContract, 'OwnershipTransferred')
+        .withArgs(owner.address, customer.address)
     })
 
     it('should emit Paused', async () => {

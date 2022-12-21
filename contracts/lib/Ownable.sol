@@ -36,9 +36,10 @@ abstract contract Ownable is Context, IOwnable {
         return _ownerAddress;
     }
 
-    function _transferOwnership(address ownerAddress) internal virtual {
-        _ownerAddress = ownerAddress;
+    function _transferOwnership(address newOwner) internal virtual {
+        address oldOwner = _ownerAddress;
+        _ownerAddress = newOwner;
 
-        emit OwnerAddressUpdated(ownerAddress);
+        emit OwnershipTransferred(oldOwner, newOwner);
     }
 }

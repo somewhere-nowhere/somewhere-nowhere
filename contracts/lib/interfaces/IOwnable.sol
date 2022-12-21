@@ -7,7 +7,10 @@ interface IOwnable {
 
     error SenderIsNotOwner();
 
-    event OwnerAddressUpdated(address indexed ownerAddress);
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
     function renounceOwnership() external;
 
