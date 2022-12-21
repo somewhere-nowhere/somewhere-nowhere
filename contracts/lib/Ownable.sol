@@ -13,7 +13,7 @@ abstract contract Ownable is Context, IOwnable {
     }
 
     modifier onlyOwner() virtual {
-        if (_msgSender() != getOwnerAddress()) revert SenderIsNotOwner();
+        if (_msgSender() != owner()) revert SenderIsNotOwner();
         _;
     }
 
@@ -21,18 +21,18 @@ abstract contract Ownable is Context, IOwnable {
         _transferOwnership(address(0));
     }
 
-    function transferOwnership(address ownerAddress)
+    function transferOwnership(address newOwner)
         public
         virtual
         override
         onlyOwner
     {
-        if (ownerAddress == address(0)) revert RecipientAddressIsZeroAddress();
+        if (newOwner == address(0)) revert RecipientAddressIsZeroAddress();
 
-        _transferOwnership(ownerAddress);
+        _transferOwnership(newOwner);
     }
 
-    function getOwnerAddress() public view virtual override returns (address) {
+    function owner() public view virtual override returns (address) {
         return _ownerAddress;
     }
 

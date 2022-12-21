@@ -121,16 +121,6 @@ describe('SomewhereNowhere', function () {
     })
   })
 
-  describe('getOwnerAddress', () => {
-    it('should be owner address', async () => {
-      expect(await tokenContract.getOwnerAddress()).to.equal(owner.address)
-    })
-
-    it('should be owner address', async () => {
-      expect(await metadataContract.getOwnerAddress()).to.equal(owner.address)
-    })
-  })
-
   describe('getReserveSupply', () => {
     it('should be 133', async () => {
       expect(await tokenContract.getReserveSupply()).to.equal(RESERVE_SUPPLY)
@@ -184,6 +174,16 @@ describe('SomewhereNowhere', function () {
   describe('name', () => {
     it("should be 'Somewhere Nowhere'", async () => {
       expect(await tokenContract.name()).to.equal('Somewhere Nowhere')
+    })
+  })
+
+  describe('owner', () => {
+    it('should be owner address', async () => {
+      expect(await tokenContract.owner()).to.equal(owner.address)
+    })
+
+    it('should be owner address', async () => {
+      expect(await metadataContract.owner()).to.equal(owner.address)
     })
   })
 
@@ -594,12 +594,12 @@ describe('SomewhereNowhere', function () {
   describe('renounceOwnership', () => {
     it('should renounce ownership', async () => {
       await tokenContract.renounceOwnership()
-      expect(await tokenContract.getOwnerAddress()).to.equal(ZERO_ADDRESS)
+      expect(await tokenContract.owner()).to.equal(ZERO_ADDRESS)
     })
 
     it('should renounce ownership', async () => {
       await metadataContract.renounceOwnership()
-      expect(await metadataContract.getOwnerAddress()).to.equal(ZERO_ADDRESS)
+      expect(await metadataContract.owner()).to.equal(ZERO_ADDRESS)
     })
 
     it('should be reverted because sender is not owner', async () => {
@@ -779,14 +779,12 @@ describe('SomewhereNowhere', function () {
   describe('transferOwnership', () => {
     it('should transfer ownership to customer', async () => {
       await tokenContract.transferOwnership(customer.address)
-      expect(await tokenContract.getOwnerAddress()).to.equal(customer.address)
+      expect(await tokenContract.owner()).to.equal(customer.address)
     })
 
     it('should transfer ownership to customer', async () => {
       await metadataContract.transferOwnership(customer.address)
-      expect(await metadataContract.getOwnerAddress()).to.equal(
-        customer.address
-      )
+      expect(await metadataContract.owner()).to.equal(customer.address)
     })
 
     it('should be reverted because sender is not owner', async () => {

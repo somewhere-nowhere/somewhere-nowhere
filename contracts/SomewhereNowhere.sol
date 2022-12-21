@@ -31,7 +31,7 @@ contract SomewhereNowhere is
         SignatureVerifier(_getDomainSeparator())
         TokenSale(3333, 133)
     {
-        setControllerAddress(getOwnerAddress());
+        setControllerAddress(_msgSender());
         setCreatorFeeInfo(creatorAddress, 500);
         setOperatorFilterRegistryAddress(registryAddress);
         if (registrySubscriptionAddress != address(0)) {

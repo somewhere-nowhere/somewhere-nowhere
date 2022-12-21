@@ -18,7 +18,7 @@ contract SomewhereNowhereMetadataV1 is ISomewhereNowhereMetadataV1, Revealable {
         address wrapperAddress,
         string memory defaultURI
     ) Ownable(_msgSender()) Revealable(linkAddress, wrapperAddress) {
-        setControllerAddress(getOwnerAddress());
+        setControllerAddress(_msgSender());
         setTokenContractAddress(tokenContractAddress);
         setDefaultURI(defaultURI);
     }
