@@ -13,15 +13,18 @@ const REGISTRY_ADDRESS = network.config.registryAddress
 const REGISTRY_SUBSCRIPTION_ADDRESS = network.config.registrySubscriptionAddress
 const LINK_ADDRESS = network.config.linkAddress
 const WRAPPER_ADDRESS = network.config.wrapperAddress
+const MAX_FEE = network.config.maxFee
+const MAX_PRIORITY_FEE = network.config.maxPriorityFee
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 const MAX_UINT32 = '4294967295'
-
-const MAX_FEE = '40'
-const MAX_PRIORITY_FEE = '4'
 
 let tokenContract
 let metadataContract
 let paymentSplitterContract
+
+function gweiToBigNumber(gwei) {
+  return ethers.utils.parseUnits(gwei.toString(), 'gwei')
+}
 
 async function main() {
   ;[deployer, signer] = await ethers.getSigners()
@@ -29,6 +32,8 @@ async function main() {
   console.log('Deployer:', deployer.address)
 
   console.log('Deployer balance:', (await deployer.getBalance()).toString())
+
+  console.log('Signer address:', signer.address)
 
   const network = await ethers.provider.getNetwork()
   console.log('Chain ID:', network.chainId)
@@ -40,8 +45,9 @@ async function main() {
     PAYEES,
     SHARES,
     {
-      maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-      maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+      maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+      maxPriorityFeePerGas:
+        MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
     }
   )
   await paymentSplitterContract.deployed()
@@ -56,8 +62,9 @@ async function main() {
     REGISTRY_SUBSCRIPTION_ADDRESS ?? ZERO_ADDRESS,
     signer.address,
     {
-      maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-      maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+      maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+      maxPriorityFeePerGas:
+        MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
     }
   )
   await tokenContract.deployed()
@@ -72,16 +79,17 @@ async function main() {
     WRAPPER_ADDRESS ?? ZERO_ADDRESS,
     DEFAULT_URI,
     {
-      maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-      maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+      maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+      maxPriorityFeePerGas:
+        MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
     }
   )
   await metadataContract.deployed()
   console.log('Metadata contract: deployed')
 
   await tokenContract.setMetadataContractAddress(metadataContract.address, {
-    maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-    maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+    maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+    maxPriorityFeePerGas: MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
   })
   console.log('Token contract: metadata contract updated')
 
@@ -96,10 +104,11 @@ async function main() {
       2,
       2,
       16234732,
-      16249135,
+      16249132,
       {
-        maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-        maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+        maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+        maxPriorityFeePerGas:
+          MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
       }
     )
     console.log('Token contract: private sale added')
@@ -109,11 +118,12 @@ async function main() {
       3200,
       2,
       2,
-      16249135,
+      16249132,
       MAX_UINT32,
       {
-        maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-        maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+        maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+        maxPriorityFeePerGas:
+          MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
       }
     )
     console.log('Token contract: public sale added')
@@ -123,8 +133,9 @@ async function main() {
      */
 
     await tokenContract.addSale(PRIVATE_SALE_ID, 3200, 2, 2, 8175015, 8171015, {
-      maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-      maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+      maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+      maxPriorityFeePerGas:
+        MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
     })
     console.log('Token contract: private sale added')
 
@@ -136,8 +147,9 @@ async function main() {
       8171015,
       MAX_UINT32,
       {
-        maxFeePerGas: ethers.utils.parseUnits(MAX_FEE, 'gwei'),
-        maxPriorityFeePerGas: ethers.utils.parseUnits(MAX_PRIORITY_FEE, 'gwei'),
+        maxFeePerGas: MAX_FEE && gweiToBigNumber(MAX_FEE),
+        maxPriorityFeePerGas:
+          MAX_PRIORITY_FEE && gweiToBigNumber(MAX_PRIORITY_FEE),
       }
     )
     console.log('Token contract: public sale added')

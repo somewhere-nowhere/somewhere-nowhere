@@ -1,3 +1,4 @@
+require('@nomiclabs/hardhat-etherscan')
 require('@nomiclabs/hardhat-waffle')
 require('hardhat-gas-reporter')
 
@@ -11,6 +12,8 @@ const {
   SAFE_ADDRESS_MAINNET,
   SAFE_ADDRESS_GOERLI,
   DEPLOYER_PRIVATE_KEY_LOCALHOST,
+  MAX_FEE,
+  MAX_PRIORITY_FEE,
 } = require('./secret.json')
 
 /**
@@ -29,6 +32,8 @@ module.exports = {
       linkAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
       wrapperAddress: '0x5A861794B927983406fCE1D062e00b9368d97Df6',
       safeAddress: SAFE_ADDRESS_MAINNET,
+      maxFee: MAX_FEE,
+      maxPriorityFee: MAX_PRIORITY_FEE,
     },
     goerli: {
       url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_API_KEY_GOERLI}`,
